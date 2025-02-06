@@ -4,12 +4,12 @@ import java.util.List;
 
 public class PPawn extends Piece {
     public PPawn(boolean white){
-        super(PieceID.PPWAN, white, false, false);
+        super(PieceID.PPAWN, white, false, false, false);
     }
 
     @Override
-    public List<int[]> legalMoves() {
-        return super.legalMoves();
+    public List<int[]> legalMoves(int[] pos, Piece[][] board2d) {
+        return super.legalMoves(pos, board2d);
     }
 
     @Override

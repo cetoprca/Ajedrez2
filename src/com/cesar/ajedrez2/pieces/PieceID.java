@@ -7,6 +7,6 @@ public enum PieceID {
     QUEEN,
     KING,
     PAWN,
-    PPWAN,
+    PPAWN,
     VOID
 }

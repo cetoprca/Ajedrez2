@@ -4,12 +4,12 @@ import java.util.List;
 
 public class Queen extends Piece {
     public Queen(boolean white){
-        super(PieceID.QUEEN, white, true, true);
+        super(PieceID.QUEEN, white, true, true, true);
     }
 
     @Override
-    public List<int[]> legalMoves() {
-        return super.legalMoves();
+    public List<int[]> legalMoves(int[] pos, Piece[][] board2d) {
+        return super.legalMoves(pos, board2d);
     }
 
     @Override
