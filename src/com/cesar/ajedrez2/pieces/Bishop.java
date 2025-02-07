@@ -7,9 +7,13 @@ public class Bishop extends Piece {
         super(PieceID.BISHOP, white, true, false, true);
     }
 
+    public Bishop(boolean white, boolean firstMove){
+        super(PieceID.BISHOP, white, true, false, firstMove);
+    }
+
     @Override
-    public List<int[]> legalMoves(int[] pos, Piece[][] board2d) {
-        return super.legalMoves(pos, board2d);
+    public List<int[]> legalMoves(int[] originPos, int[] finalPos, Piece[][] board2d) {
+        return stdMoves.legalMoveDia(originPos,finalPos, board2d);
     }
 
     @Override

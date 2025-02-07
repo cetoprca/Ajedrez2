@@ -8,9 +8,13 @@ public class Knight extends Piece {
         super(PieceID.KNIGHT, white, false, false, true);
     }
 
+    public Knight(boolean white, boolean firstMove){
+        super(PieceID.KNIGHT, white, false, false, firstMove);
+    }
+
     @Override
-    public List<int[]> legalMoves(int[] pos, Piece[][] board2d) {
-        return legalMoveKnight(pos, board2d);
+    public List<int[]> legalMoves(int[] originPos, int[] finalPos, Piece[][] board2d) {
+        return legalMoveKnight(originPos, board2d);
     }
 
     @Override
@@ -21,109 +25,25 @@ public class Knight extends Piece {
     public static List<int[]> legalMoveKnight(int[] pos, Piece[][] board2d){
         List<int[]> legalMoves = new ArrayList<>();
 
-        //Movimientos hard codeados
+        int[][] coords = {
+                //Down 2, side 1
+                {pos[0]+2, pos[0]+1}, {pos[0]+2, pos[0]-1},
+                //Down 1, side 2
+                {pos[0]+1, pos[0]+2}, {pos[0]+1, pos[0]-2},
+                //Up 2, side 1
+                {pos[0]-2, pos[0]+1}, {pos[0]-2, pos[0]-1},
+                //Up 1, side 2
+                {pos[0]-1, pos[0]+2}, {pos[0]-1, pos[0]-2},
+        };
 
-        if (pos[0]+2 < 8 && pos[1]+1 < 8) {
-            if (board2d[pos[0] + 2][pos[1] + 1] == null) {
-                int[] Cpos = {pos[0] + 2, pos[1] + 1};
-                legalMoves.add(Cpos);
-            } else if (board2d[pos[0] + 2][pos[1] + 1].white != board2d[pos[0]][pos[1]].white) {
-                int[] Cpos = {pos[0] + 2, pos[1] + 1};
-                legalMoves.add(Cpos);
-            }else if (board2d[pos[0] + 2][pos[1] + 1].id == PieceID.PPAWN){
-                int[] Cpos = {pos[0] + 2, pos[1] + 1};
-                legalMoves.add(Cpos);
-            }
-        }
-
-        if (pos[0]+2 < 8 && pos[1]-1 > -1){
-            if (board2d[pos[0]+2][pos[1]-1] == null){
-                int[] Cpos = {pos[0]+2, pos[1]-1};
-                legalMoves.add(Cpos);
-            }else if (board2d[pos[0]+2][pos[1]-1].white != board2d[pos[0]][pos[1]].white){
-                int[] Cpos = {pos[0]+2, pos[1]-1};
-                legalMoves.add(Cpos);
-            }else if (board2d[pos[0]+2][pos[1]-1].id == PieceID.PAWN){
-                int[] Cpos = {pos[0]+2, pos[1]-1};
-                legalMoves.add(Cpos);
-            }
-        }
-
-        if (pos[0]-2 > -1 && pos[1]+1 < 8) {
-            if (board2d[pos[0] - 2][pos[1] + 1] == null) {
-                int[] Cpos = {pos[0] - 2, pos[1] + 1};
-                legalMoves.add(Cpos);
-            } else if (board2d[pos[0] - 2][pos[1] + 1].white != board2d[pos[0]][pos[1]].white) {
-                int[] Cpos = {pos[0] - 2, pos[1] + 1};
-                legalMoves.add(Cpos);
-            }else if (board2d[pos[0] - 2][pos[1] + 1].id == PieceID.PAWN) {
-                int[] Cpos = {pos[0] - 2, pos[1] + 1};
-                legalMoves.add(Cpos);
-            }
-        }
-
-        if (pos[0]-2 > -1 && pos[1]-1 > -1) {
-            if (board2d[pos[0] - 2][pos[1] - 1] == null) {
-                int[] Cpos = {pos[0] - 2, pos[1] - 1};
-                legalMoves.add(Cpos);
-            } else if (board2d[pos[0] - 2][pos[1] - 1].white != board2d[pos[0]][pos[1]].white) {
-                int[] Cpos = {pos[0] - 2, pos[1] - 1};
-                legalMoves.add(Cpos);
-            }else if (board2d[pos[0] - 2][pos[1] - 1].id == PieceID.PPAWN) {
-                int[] Cpos = {pos[0] - 2, pos[1] - 1};
-                legalMoves.add(Cpos);
-            }
-        }
-
-        if (pos[0]+1 < 8 && pos[1]+2 < 8) {
-            if (board2d[pos[0] + 1][pos[1] + 2] == null) {
-                int[] Cpos = {pos[0] + 1, pos[1] + 2};
-                legalMoves.add(Cpos);
-            } else if (board2d[pos[0] + 1][pos[1] + 2].white != board2d[pos[0]][pos[1]].white) {
-                int[] Cpos = {pos[0] + 1, pos[1] + 2};
-                legalMoves.add(Cpos);
-            }else if (board2d[pos[0] + 1][pos[1] + 2].id == PieceID.PPAWN) {
-                int[] Cpos = {pos[0] + 1, pos[1] + 2};
-                legalMoves.add(Cpos);
-            }
-        }
-
-        if (pos[0]+1 < 8 && pos[1]-2 > -1) {
-            if (board2d[pos[0] + 1][pos[1] - 2] == null) {
-                int[] Cpos = {pos[0] + 1, pos[1] - 2};
-                legalMoves.add(Cpos);
-            } else if (board2d[pos[0] + 1][pos[1] - 2].white != board2d[pos[0]][pos[1]].white) {
-                int[] Cpos = {pos[0] + 1, pos[1] - 2};
-                legalMoves.add(Cpos);
-            }else if (board2d[pos[0] + 1][pos[1] - 2].id == PieceID.PPAWN) {
-                int[] Cpos = {pos[0] + 1, pos[1] - 2};
-                legalMoves.add(Cpos);
-            }
-        }
-
-        if (pos[0]-1 > -1 && pos[1]+2 < 8) {
-            if (board2d[pos[0] - 1][pos[1] + 2] == null) {
-                int[] Cpos = {pos[0] - 1, pos[1] + 2};
-                legalMoves.add(Cpos);
-            } else if (board2d[pos[0] - 1][pos[1] + 2].white != board2d[pos[0]][pos[1]].white) {
-                int[] Cpos = {pos[0] - 1, pos[1] + 2};
-                legalMoves.add(Cpos);
-            }else if (board2d[pos[0] - 1][pos[1] + 2].id == PieceID.PPAWN) {
-                int[] Cpos = {pos[0] - 1, pos[1] + 2};
-                legalMoves.add(Cpos);
-            }
-        }
-
-        if (pos[0]-1 > -1 && pos[1]-2 > -1) {
-            if (board2d[pos[0] - 1][pos[1] - 2] == null) {
-                int[] Cpos = {pos[0] - 1, pos[1] - 2};
-                legalMoves.add(Cpos);
-            } else if (board2d[pos[0] - 1][pos[1] - 2].white != board2d[pos[0]][pos[1]].white) {
-                int[] Cpos = {pos[0] - 1, pos[1] - 2};
-                legalMoves.add(Cpos);
-            }else if (board2d[pos[0] - 1][pos[1] - 2].id == PieceID.PPAWN) {
-                int[] Cpos = {pos[0] - 1, pos[1] - 2};
-                legalMoves.add(Cpos);
+        for(int[] coord : coords){
+            Piece target = board2d[coord[0]][coord[1]];
+            if (
+                    target.getId() == PieceID.VOID ||
+                            target.id == PieceID.PPAWN ||
+                            target.white != board2d[pos[0]][pos[1]].white
+            ) {
+                legalMoves.add(coord);
             }
         }
 

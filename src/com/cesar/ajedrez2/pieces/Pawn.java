@@ -9,9 +9,13 @@ public class Pawn extends Piece{
         super(PieceID.PAWN, white, false, true, true);
     }
 
+    public Pawn(boolean white, boolean firstMove) {
+        super(PieceID.PAWN, white, false, true, firstMove);
+    }
+
     @Override
-    public List<int[]> legalMoves(int[] pos, Piece[][] board2d) {
-        return legalMovePeon(pos, board2d);
+    public List<int[]> legalMoves(int[] originPos, int[] finalPos, Piece[][] board2d) {
+        return legalMovePeon(originPos, board2d);
     }
 
     @Override
@@ -22,7 +26,7 @@ public class Pawn extends Piece{
     public static List<int[]> legalMovePeon(int[] pos, Piece[][] board2d){
         List<int[]> legalMoves = new ArrayList<>();
 
-        int iteraciones = board2d[pos[0]][pos[1]].firstMove ? 2 : 1;
+        int iteraciones = board2d[pos[0]][pos[1]].firstMove ? 3 : 2;
         if (!board2d[pos[0]][pos[1]].white){
             //Si es peon negro
 
@@ -32,7 +36,7 @@ public class Pawn extends Piece{
                 if(pos[0]+i > board2d.length){
                     break;
                 }
-                if (board2d[pos[0]+i][pos[1]] == null){
+                if (board2d[pos[0]+i][pos[1]].getId() == PieceID.VOID){
                     int[] Cpos = {pos[0]+i, pos[1]};
                     legalMoves.add(Cpos);
                 }else break;
@@ -41,7 +45,7 @@ public class Pawn extends Piece{
             //Atacar izquierda
             //Si la casilla tiene una pieza del otro bando la posicion se registra como valida
             if (pos[0]+1 < 8 && pos[1]-1 > -1){
-                if (board2d[pos[0]+1][pos[1]-1] != null){
+                if (board2d[pos[0]+1][pos[1]-1].getId() != PieceID.VOID){
                     if (board2d[pos[0]+1][pos[1]-1].white != board2d[pos[0]][pos[1]].white){
                         int[] Cpos = {pos[0]+1, pos[1]-1};
                         legalMoves.add(Cpos);
@@ -52,7 +56,7 @@ public class Pawn extends Piece{
             //Atacar derecha
             //Si la casilla tiene una pieza del otro bando la posicion se registra como valida
             if (pos[0]+1 < 8 && pos[1]+1 < 8) {
-                if (board2d[pos[0]+1][pos[1] + 1] != null) {
+                if (board2d[pos[0]+1][pos[1] + 1].getId() != PieceID.VOID) {
                     if (board2d[pos[0]+1][pos[1]+1].white != board2d[pos[0]][pos[1]].white) {
                         int[] Cpos = {pos[0]+1, pos[1]+1};
                         legalMoves.add(Cpos);
@@ -68,7 +72,7 @@ public class Pawn extends Piece{
                 if(pos[0]-i < 0){
                     break;
                 }
-                if (board2d[pos[0]-i][pos[1]] == null){
+                if (board2d[pos[0]-i][pos[1]].getId() == PieceID.VOID){
                     int[] Cpos = {pos[0]-i, pos[1]};
                     legalMoves.add(Cpos);
                 }else break;
@@ -77,7 +81,7 @@ public class Pawn extends Piece{
             //Atacar izquierda
             //Si la casilla tiene una pieza del otro bando la posicion se registra como valida
             if (pos[0]-1 < 8 && pos[1]-1 > -1){
-                if (board2d[pos[0]-1][pos[1]-1] != null){
+                if (board2d[pos[0]-1][pos[1]-1].getId() != PieceID.VOID){
                     if (board2d[pos[0]-1][pos[1]-1].white != board2d[pos[0]][pos[1]].white){
                         int[] Cpos = {pos[0]-1, pos[1]-1};
                         legalMoves.add(Cpos);
@@ -88,7 +92,7 @@ public class Pawn extends Piece{
             //Atacar derecha
             //Si la casilla tiene una pieza del otro bando la posicion se registra como valida
             if (pos[0]-1 < 8 && pos[1]+1 < 8) {
-                if (board2d[pos[0]-1][pos[1]+1] != null) {
+                if (board2d[pos[0]-1][pos[1]+1].getId() != PieceID.VOID) {
                     if (board2d[pos[0]-1][pos[1]+1].white != board2d[pos[0]][pos[1]].white) {
                         int[] Cpos = {pos[0]-1, pos[1]+1};
                         legalMoves.add(Cpos);

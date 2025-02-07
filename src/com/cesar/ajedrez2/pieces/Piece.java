@@ -5,15 +5,11 @@ import java.util.List;
 public abstract class Piece {
     protected PieceID id;
     protected boolean white;
-    protected boolean diagonal;
-    protected boolean horizontal;
     protected boolean firstMove;
 
     protected Piece(PieceID id, boolean white, boolean diagonal, boolean horizontal, boolean firstMove) {
         this.id = id;
         this.white = white;
-        this.diagonal = diagonal;
-        this.horizontal = horizontal;
         this.firstMove = firstMove;
     }
 
@@ -21,7 +17,12 @@ public abstract class Piece {
         this.id = id;
     }
 
-    public List<int[]> legalMoves(int[] pos, Piece[][] board2d){
+    public Piece(PieceID id, boolean white) {
+        this.id = id;
+        this.white = white;
+    }
+
+    public List<int[]> legalMoves(int[] originPos, int[] finalPos, Piece[][] board2d){
         return null;
     }
 

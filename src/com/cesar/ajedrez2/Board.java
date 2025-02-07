@@ -1,7 +1,7 @@
 package com.cesar.ajedrez2;
 
-import com.cesar.ajedrez2.pieces.*;
 import com.cesar.ajedrez2.pieces.Void;
+import com.cesar.ajedrez2.pieces.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +11,6 @@ public class Board {
     public boolean whiteTurn;
     public boolean end;
     private Piece[][] board2D;
-    private Piece[][] startBoard;
 
     private Piece[][] defaultBoard(){
         Piece[][] board = new Piece[size][size];
@@ -52,18 +51,21 @@ public class Board {
         return board;
     }
 
-    public Board(int size, boolean whiteTurn) {
+    public Board(int size, boolean whiteTurn, boolean empty) {
         this.size = size;
         this.whiteTurn = whiteTurn;
         this.end = false;
-        this.board2D = emptyBoard();
+        if (empty){
+            clear();
+        }else {
+            reset();
+        }
     }
 
     public Board(){
         this.size = 8;
         this.whiteTurn = true;
         this.end = false;
-        this.startBoard = defaultBoard();
         reset();
     }
 
@@ -76,23 +78,34 @@ public class Board {
         int[] originPos = {originRow, originColumn};
         int[] finalPos = {finalRow, finalColumn};
 
-        //If origin pos isnt valid then return
-        if ((originRow > 7 || originRow < 0) || (originColumn > 7 || originColumn < 0)){
-            System.out.println("That's not a valid start position");
-            return;
-        }
-        //If end pos isnt valid then return
-        if ((finalRow > 7 || finalRow < 0) || (finalColumn > 7 || finalColumn < 0)){
-            System.out.println("That's not a valid end position");
+        //If origin pos or final pos isnt valid then return
+        if (
+                ((originRow > 7 || originRow < 0) || (originColumn > 7 || originColumn < 0))
+                ||
+                ((finalRow > 7 || finalRow < 0) || (finalColumn > 7 || finalColumn < 0))
+        ) {
+            System.out.println("Not a valid position");
             return;
         }
 
         Piece originPiece = board2D[originRow][originColumn];
         Piece finalPiece = board2D[finalRow][finalColumn];
 
+        if (originPiece.isWhite() != whiteTurn){
+            System.out.println("It's the opposite team's turn");
+            return;
+        }
+
         boolean isLegal = false;
 
-        List<int[]> legalMoves = originPiece.legalMoves(originPos, board2D);
+        List<int[]> legalMoves = originPiece.legalMoves(originPos, finalPos, board2D);
+
+        if (showMovesOnly){
+            for (int[] move : legalMoves){
+                System.out.println(Arrays.toString(move));
+            }
+            return;
+        }
 
         for (int[] pos : legalMoves){
             if (Arrays.equals(pos, finalPos)) {
@@ -132,6 +145,8 @@ public class Board {
             board2D[originRow][originColumn] = new Void();
 
             whiteTurn = !whiteTurn;
+
+            show();
         }
     }
 
@@ -144,7 +159,13 @@ public class Board {
     }
 
     public void reset(){
-        this.board2D = this.startBoard;
+        this.board2D = defaultBoard();
+        show();
+    }
+
+    public void clear(){
+        this.board2D = emptyBoard();
+        show();
     }
 
     public void show(){
