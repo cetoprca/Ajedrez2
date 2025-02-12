@@ -135,11 +135,6 @@ public class Board {
             if (originPiece.isFirstMove()){
                 originPiece.setFirstMove(false);
             }
-            //If the KING is captured the game finishes and a win message gets sent
-            if (finalPiece.getId() == PieceID.KING){
-                System.out.println("The " + (originPiece.isWhite() ? "White" : "Black") + " team wins!");
-                end = true;
-            }
 
             board2D[finalRow][finalColumn] = originPiece;
             board2D[originRow][originColumn] = new Void();
@@ -147,6 +142,11 @@ public class Board {
             whiteTurn = !whiteTurn;
 
             show();
+            //If the KING is captured the game finishes and a win message gets sent
+            if (finalPiece.getId() == PieceID.KING){
+                System.out.println("The " + (originPiece.isWhite() ? "White" : "Black") + " team wins!");
+                end = true;
+            }
         }
     }
 
@@ -160,12 +160,12 @@ public class Board {
 
     public void reset(){
         this.board2D = defaultBoard();
-        show();
+        end = false;
+        whiteTurn = true;
     }
 
     public void clear(){
         this.board2D = emptyBoard();
-        show();
     }
 
     public void show(){

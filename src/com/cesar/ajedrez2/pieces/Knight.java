@@ -27,26 +27,27 @@ public class Knight extends Piece {
 
         int[][] coords = {
                 //Down 2, side 1
-                {pos[0]+2, pos[0]+1}, {pos[0]+2, pos[0]-1},
+                {pos[0]+2, pos[1]+1}, {pos[0]+2, pos[1]-1},
                 //Down 1, side 2
-                {pos[0]+1, pos[0]+2}, {pos[0]+1, pos[0]-2},
+                {pos[0]+1, pos[1]+2}, {pos[0]+1, pos[1]-2},
                 //Up 2, side 1
-                {pos[0]-2, pos[0]+1}, {pos[0]-2, pos[0]-1},
+                {pos[0]-2, pos[1]+1}, {pos[0]-2, pos[1]-1},
                 //Up 1, side 2
-                {pos[0]-1, pos[0]+2}, {pos[0]-1, pos[0]-2},
+                {pos[0]-1, pos[1]+2}, {pos[0]-1, pos[1]-2},
         };
 
-        for(int[] coord : coords){
-            Piece target = board2d[coord[0]][coord[1]];
-            if (
-                    target.getId() == PieceID.VOID ||
-                            target.id == PieceID.PPAWN ||
-                            target.white != board2d[pos[0]][pos[1]].white
-            ) {
-                legalMoves.add(coord);
+        for(int[] coord : coords) {
+            if ((coord[0] < 8 && coord[0] > -1) && (coord[1] < 8 && coord[1] > -1)) {
+                Piece target = board2d[coord[0]][coord[1]];
+                if (
+                        target.getId() == PieceID.VOID ||
+                                target.id == PieceID.PPAWN ||
+                                target.white != board2d[pos[0]][pos[1]].white
+                ) {
+                    legalMoves.add(coord);
+                }
             }
         }
-
         return legalMoves;
     }
 }
