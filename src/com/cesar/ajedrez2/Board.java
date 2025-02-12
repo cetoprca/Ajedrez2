@@ -5,6 +5,7 @@ import com.cesar.ajedrez2.pieces.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class Board {
     public int size;
@@ -135,6 +136,9 @@ public class Board {
             if (originPiece.isFirstMove()){
                 originPiece.setFirstMove(false);
             }
+            if (originPiece.getId() == PieceID.PAWN && finalColumn == (originPiece.isWhite() ? 0 : 7)){
+                originPiece = promotion(originPiece.isWhite());
+            }
 
             board2D[finalRow][finalColumn] = originPiece;
             board2D[originRow][originColumn] = new Void();
@@ -146,6 +150,26 @@ public class Board {
             if (finalPiece.getId() == PieceID.KING){
                 System.out.println("The " + (originPiece.isWhite() ? "White" : "Black") + " team wins!");
                 end = true;
+            }
+        }
+    }
+
+    public Piece promotion(boolean white){
+        Scanner scanner = new Scanner(System.in);
+        int selection = scanner.nextInt();
+
+        switch (selection){
+            case 2 -> {
+                return new Knight(white);
+            }
+            case 3 -> {
+                return new Bishop(white);
+            }
+            case 4 -> {
+                return new Tower(white);
+            }
+            default -> {
+                return new Queen(white);
             }
         }
     }
