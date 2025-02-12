@@ -78,28 +78,19 @@ public class Pawn extends Piece{
                 }else break;
             }
 
-            //Atacar izquierda
-            //Si la casilla tiene una pieza del otro bando la posicion se registra como valida
-            if (pos[0]-1 < 8 && pos[1]-1 > -1){
-                if (board2d[pos[0]-1][pos[1]-1].getId() != PieceID.VOID){
-                    if (board2d[pos[0]-1][pos[1]-1].white != board2d[pos[0]][pos[1]].white){
-                        int[] Cpos = {pos[0]-1, pos[1]-1};
-                        legalMoves.add(Cpos);
+            for (int i = 0; i < 2; i++) {
+                //Atacar izquierda si i = 0 y a derecha si i = 1
+                //Si la casilla tiene una pieza del otro bando la posicion se registra como valida
+                int incdec = ((i == 0) ? -1 : +1);
+                if (pos[0] - 1 < 8 && ((i == 0) ? -1 : 8) < pos[1] + incdec) {
+                    if (board2d[pos[0] - 1][pos[1] + incdec].getId() != PieceID.VOID) {
+                        if (board2d[pos[0] - 1][pos[1] + incdec].white != board2d[pos[0]][pos[1]].white) {
+                            int[] Cpos = {pos[0] - 1, pos[1] + incdec};
+                            legalMoves.add(Cpos);
+                        }
                     }
                 }
             }
-
-            //Atacar derecha
-            //Si la casilla tiene una pieza del otro bando la posicion se registra como valida
-            if (pos[0]-1 < 8 && pos[1]+1 < 8) {
-                if (board2d[pos[0]-1][pos[1]+1].getId() != PieceID.VOID) {
-                    if (board2d[pos[0]-1][pos[1]+1].white != board2d[pos[0]][pos[1]].white) {
-                        int[] Cpos = {pos[0]-1, pos[1]+1};
-                        legalMoves.add(Cpos);
-                    }
-                }
-            }
-        }
 
         return legalMoves;
     }
