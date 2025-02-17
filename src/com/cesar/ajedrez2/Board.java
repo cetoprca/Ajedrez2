@@ -11,6 +11,7 @@ public class Board {
     public int size;
     public boolean whiteTurn;
     public boolean end;
+    public String promotionSelection;
     private Piece[][] board2D;
 
     private Piece[][] defaultBoard(){
@@ -156,16 +157,34 @@ public class Board {
 
     public Piece promotion(boolean white){
         Scanner scanner = new Scanner(System.in);
-        int selection = scanner.nextInt();
+
+        String selection = "";
+
+        if (!LaunchChess.graphicMode){
+            System.out.println(
+                    "Please select a Piece to promote your Pawn to:\n" +
+                    "1 -> Queen\n" +
+                    "2 -> Knight\n" +
+                    "3 -> Bishop\n" +
+                    "4 -> Tower\n" +
+                    "If anything else is given Queen will be chosen"
+            );
+
+            selection = scanner.nextLine();
+        }else {
+            if (promotionSelection != null){
+                selection = promotionSelection;
+            }
+        }
 
         switch (selection){
-            case 2 -> {
+            case "2" -> {
                 return new Knight(white);
             }
-            case 3 -> {
+            case "3" -> {
                 return new Bishop(white);
             }
-            case 4 -> {
+            case "4" -> {
                 return new Tower(white);
             }
             default -> {

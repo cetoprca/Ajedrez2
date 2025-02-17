@@ -1,14 +1,21 @@
 package com.cesar.ajedrez2;
 
-import com.cesar.ajedrez2.pieces.*;
+
+import com.cesar.ajedrez2.pieces.Pawn;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
-    public static void main(String[] args) {
-        Board board = new Board();
+public class LaunchChess implements Runnable{
+    public static boolean graphicMode;
+    public static void start(boolean graphicMode) {
+        LaunchChess.graphicMode = graphicMode;
+
+        Board board = new Board(8, true, true);
+
+        board.add(1,0, new Pawn(true));
+
         board.show();
 
         menu(board);
@@ -64,6 +71,10 @@ public class Main {
                 }
             }
         }
+    }
+
+    @Override
+    public void run() {
     }
 
     // TODO Add promotion
