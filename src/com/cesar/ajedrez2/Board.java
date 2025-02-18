@@ -35,8 +35,8 @@ public class Board {
 
         board[7][3] = new Queen(true);
         board[7][4] = new King(true);
-        board[0][3] = new King(true);
-        board[0][4] = new Queen(true);
+        board[0][3] = new King(false);
+        board[0][4] = new Queen(false);
 
         return board;
     }
